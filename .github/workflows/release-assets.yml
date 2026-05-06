@@ -20,6 +20,7 @@ jobs:
       - build-docs
     env:
       RELEASE_TAG: ${{ github.event.release.tag_name }}
+      VENDOR_NAME: friendly-captcha
       MODULE_NAME: magento2-friendly-captcha
     steps:
       - name: Check out release tag
@@ -39,7 +40,7 @@ jobs:
 
           STAGING_DIR="$(mktemp -d)"
           PACKAGE_DIR="${STAGING_DIR}/${MODULE_NAME}"
-          ZIP_PATH="${RUNNER_TEMP}/${MODULE_NAME}-${RELEASE_TAG}.zip"
+          ZIP_PATH="${RUNNER_TEMP}/${VENDOR_NAME}_${MODULE_NAME}-${RELEASE_TAG}.zip"
 
           mkdir -p "${PACKAGE_DIR}"
 
