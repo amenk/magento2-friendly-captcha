@@ -34,8 +34,6 @@ jobs:
           path: release-assets/docs
 
       - name: Prepare marketplace package
-        env:
-          RELEASE_VERSION: ${{ github.event.release.tag_name }}
         run: |
           set -euo pipefail
 
@@ -48,10 +46,11 @@ jobs:
           rsync -rlt \
             --exclude='.git/' \
             --exclude='.gitignore' \
+            --exclude='.github' \
             ./ "${PACKAGE_DIR}/"
 
           jq \
-            --arg version "${RELEASE_VERSION#v}" \
+            --arg version "${RELEASE_TAG#v}" \
             '.name = "friendly-captcha/magento2-friendly-captcha"
             | .version = $version
             | .conflict = {"imi/magento2-friendly-captcha":"*"}' \
